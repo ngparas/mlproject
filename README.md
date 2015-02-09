@@ -1,2 +1,4 @@
-# EECS 395 Machine Learning Final Project
+# EECS 395 Machine Learning : Article Recommendation Engine
 Rohan Agarwal | Annabel Buckfire | Nick Paras | Leon Sasson
+
+We come across many articles on a daily basis which, after a quick glance at the title, seem interesting. Apps like Pocket (https://getpocket.com/) enable us to save articles to read later, creating personalized archives of articles. However, most of us end up saving way more articles than we ever get around to actually reading. We’d like to create an article recommendation system that learns from the articles that you’ve read and enjoyed in pocket and then ranks the currently unread articles to prioritize the ones you are most likely to like. Potential manifestations of this recommendation engine could be a classifier (“Read” vs. “Do not read”) or predictive model on a five-point scale. In practice, our solution would continuously learn (retrain the model each time a new article is rated) so that it improves as you use it more regularly.
