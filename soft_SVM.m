@@ -1,4 +1,4 @@
-function x = soft_svm(D, b, lambda)
+function x = soft_SVM(D, b, lambda)
 % lambda = 10^2
 L = 2*norm(diag(b)*D')^2;
 alpha = 1/(L + 2*lambda);        % step length
