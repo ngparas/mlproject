@@ -53,7 +53,7 @@ for x=(1:imgNum)
     df = sampleimages(sampNum, 28, path);
     
     %Adding '0' as the classifier label
-    df = [df; zeros(1,sampNum)];
+    df = [df; -ones(1,sampNum)];
     
     %Adding to data
     colIndex = 1+dataNum+(x-1)*sampNum;
