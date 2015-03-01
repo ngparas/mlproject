@@ -1,16 +1,14 @@
-function data = create_training_data(path)
+function data = create_training_data(path,dataNum,sampNum)
+%path is the path to the images
+%dataNum is the number of face images
+%sampNum is the number of samples to take from each of the 10 nonface
+%images
 
 %Width of image (assuming square)
 imgDim = 28;
 
-%Number of images of faces
-dataNum = 100;
-
 %Number of images to sample from
 imgNum = 10;
-
-%Number of samples per image
-sampNum = 10;
 
 %creating dataset
 data = zeros(imgDim^2+1,dataNum+imgNum*sampNum);
@@ -52,7 +50,7 @@ for x=(1:imgNum)
     %Generating image samples
     df = sampleimages(sampNum, 28, path);
     
-    %Adding '0' as the classifier label
+    %Adding '-1' as the classifier label
     df = [df; -ones(1,sampNum)];
     
     %Adding to data

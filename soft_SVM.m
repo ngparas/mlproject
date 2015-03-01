@@ -2,7 +2,7 @@ function x = soft_svm(D, b, lambda)
 % lambda = 10^2
 L = 2*norm(diag(b)*D')^2;
 alpha = 1/(L + 2*lambda);        % step length
-x0 = [1;2;3];    % initial point
+x0 = ones(size(D,1),1);    % initial point
 
 %x, in, out = hessian_descent(x)
 x = grad_descent_soft_SVM();
@@ -66,7 +66,7 @@ function x = grad_descent_soft_SVM()
         k = size(D,1);
         U = zeros(k);
         U(2:k,2:k) = eye(k-1);
-        grad = -2 * D * diag(b) * max(0, ones(size(b,2))-diag(b)*D'*x) + 2 * lambda * U * x;
+        grad = -2 * D * diag(b) * max(0, ones(size(b,2),1)-diag(b)*D'*x) + 2 * lambda * U * x;
         x = x - alpha*grad;
 
         % update iteration count

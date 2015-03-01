@@ -1,6 +1,6 @@
-function lambda = cross_validate_classification(k, D, b, lambda_range)
+function lam = cross_validate_classification(k, D, b, lambda_range)
    n = size(D,1);
-   indices = generate_indices(n, k)
+   indices = generate_indices(n, k);
 
     function fold_indices = generate_indices(n, k)
         fold_sizes = floor(n / k) * ones(k,1);
@@ -15,7 +15,7 @@ function lambda = cross_validate_classification(k, D, b, lambda_range)
         end
     end
 
-function cross_validate(A,b,c,poly_deg,lams)  
+function lam = cross_validate(A,b,c,poly_deg,lams)  
     %%% performs 3-fold cross validation
     % generate features     
     

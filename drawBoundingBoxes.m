@@ -25,7 +25,7 @@ imshow(imgMat);
 hold on
 spy(faceBoxes);
 
-
+imgWithBoxes = faceBoxes; 
 
 
 %# make sure the image doesn't disappear if we plot something else
