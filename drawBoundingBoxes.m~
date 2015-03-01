@@ -9,36 +9,40 @@ function [ imgWithBoxes ] = drawBoundingBoxes( imgMat, faceCoord )
 intOnes = zeros(size(faceCoord));
 
 %search through faceCoord and find the locations of the interior 1s
-for row = 2:(size(faceCoord,1) - 1)
-   for col = 2:(size(faceCoord,2) - 1)
-       if (faceCoord(row,col-1) == 1) && (faceCoord(row,col+1) == 1) && (faceCoord(row-1,col) == 1) && (faceCoord(row+1,col) == 1)
+for row = 2:size(faceCoord,2)
+   for col = 2:size(faceCoord,1)
+       if (faceCoord(row,col-1) == 1) && (faceCoord(row,col+1) == 1) && (faceCoord(row,col) == 1)
            intOnes(row,col) = 1;
        end
    end
 end
 
-%remove interior 1s
-faceBoxes = faceCoord - intOnes;
 
-figure
+
+
+
+
+
+
+
+
 imshow(imgMat);
-hold on
-spy(faceBoxes);
+spy(faceCoord);
 
 
 
 
 %# make sure the image doesn't disappear if we plot something else
-%hold on
+hold on
 
 %# define points (in matrix coordinates)
-%p1 = [10,100];
-%p2 = [100,20];
+p1 = [10,100];
+p2 = [100,20];
 
 %# plot the points.
 %# Note that depending on the definition of the points,
 %# you may have to swap x and y
-%plot([p1(2),p2(2)],[p1(1),p2(1)],'Color','r','LineWidth',2)
+plot([p1(2),p2(2)],[p1(1),p2(1)],'Color','r','LineWidth',2)
 
 end
 

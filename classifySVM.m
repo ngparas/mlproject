@@ -5,7 +5,14 @@ function [ label ] = classifySVM( newObs, coeff )
 %   coeff is a vector of the trained coefficients for an SVM
 %   label is the predicted label either 1: face, 0: otherwise
 
-preLabel = 
+%calculate d'*x for new data point with SVM hyperplane
+preLabel = newObs' * coeff;
+
+if preLabel > 0 %if above hyperplane, label 1: face
+    label = 1;
+else %if below hyperplane, label 0: not face
+    label = 0;
+end
 
 end
 
