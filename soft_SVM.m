@@ -9,8 +9,8 @@ x = hessian_descent(x0, D, b, lambda);
 function [x] = hessian_descent(x0, D, b, lambda)
 
     % initializations
-    grad_stop = 10^-3;
-    max_its = 50;
+    grad_stop = 10^-8;
+    max_its = 500;
     iter = 1;
     grad_eval = 1;
     x = x0;
@@ -18,9 +18,8 @@ function [x] = hessian_descent(x0, D, b, lambda)
     oneMat = ones(size(D,2),1);
     
     %Define U
-    k = size(D,1);
-    U = zeros(k);
-    U(2:k,2:k) = eye(k-1);
+    U = eye(length(x));
+    U(1,1) = 0;
   
     % main loop
     while norm(grad_eval) > grad_stop && iter <= max_its
@@ -31,7 +30,9 @@ function [x] = hessian_descent(x0, D, b, lambda)
         %    hess_eval = sign(hess_eval)*10^-5;
         %end
         %x = x - grad_eval/hess_eval;
+        
         x = x - pinv(hess_eval)*grad_eval;
+        
         % update stopers
         iter = iter + 1;
     end  
@@ -45,8 +46,9 @@ end
 % evaluate the hessian
 function H = hess(x, D, b, lambda, U)
     %find set of indices, S, where 1-bndn'x >= 0
-    S = zeros(size(b));
-    for ii = 1:size(b,1)
+    S = zeros(size(b,2),1);
+    size(S)
+    for ii = 1:size(b,2)
        if (1 - b(ii)*D(:,ii)'*x) >= 0
           S(ii) = 1; 
        end
@@ -54,7 +56,7 @@ function H = hess(x, D, b, lambda, U)
     
     %initialize DsubS
     Ds = zeros(size(D,1),sum(S));
-    
+    size(Ds)
     stackInd = 1;
     for incInd = 1:size(S)
         if S(incInd) == 1

@@ -12,10 +12,10 @@ faceCoord = zeros(size(imgMat));
 defPatchSize = 28;
 
 %Set patch sizes to search with:
-patchSizeRatios = [0.5 1 2 5 10 15];
+patchSizeRatios = [0.5:0.5:15];
 
 %Search step size ratio
-stepSizeRatio = 0.25;
+stepSizeRatio = 0.1;
 
 %Find size of image
 imgSize = size(imgMat);
@@ -37,7 +37,7 @@ for ratioInd = 1:length(patchSizeRatios)
            %get normalized vector of patch
            patch = vec_norm(imresize(imgMat(vLoc:(vLoc + patchSize - 1),hLoc:(hLoc + patchSize -1)),1/patchSizeRatios(ratioInd)));
            %determine if the patch has a face or not
-           isFace = classifySVM(patch, model);
+           isFace = classifySVM([1; patch], model);
            %if theres a face, update faceCoord
            if isFace == 1
                faceCoord(vLoc:(vLoc + patchSize - 1),hLoc:(hLoc + patchSize -1)) = 1;
@@ -50,9 +50,13 @@ for ratioInd = 1:length(patchSizeRatios)
    end
 end
 
+%if nothing found, try whole image
+patch = [1; vec_norm(imresize(imgMat,[28 28]))];
 
-
-
+isFace = classifySVM(patch,model);
+if isFace == 1
+    faceCoord = ones(size(imgMat));
+end
 
 
 
