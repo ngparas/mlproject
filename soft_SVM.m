@@ -1,59 +1,70 @@
 function x = soft_SVM(D, b, lambda)
-% lambda = 10^2
-L = 2*norm(diag(b)*D')^2;
-alpha = 1/(L + 2*lambda);        % step length
-x0 = ones(size(D,1),1);    % initial point
+%set initial point
+x0 = zeros(size(D,1),1);
 
-%x, in, out = hessian_descent(x)
-x = grad_descent_soft_SVM();
+x = hessian_descent(x0, D, b, lambda);
+%x = grad_descent_soft_SVM();
 
 % performs hessian descent
-function [x,in,out] = hessian_descent(x)
+function [x] = hessian_descent(x0, D, b, lambda)
 
     % initializations
     grad_stop = 10^-3;
     max_its = 50;
     iter = 1;
-    in = [x];    
-    out = [obj(x)];
     grad_eval = 1;
+    x = x0;
+    
+    %Define U
+    U = zeros(k);
+    U(2:k,2:k) = eye(k-1);
   
     % main loop
-    while abs(grad_eval) > grad_stop && iter <= max_its
-        % take gradient step
-        grad_eval = grad(x);
-        hess_eval = hess(x);
+    while norm(grad_eval) > grad_stop && iter <= max_its
+        % take step
+        grad_eval = grad(x, D, b, lambda, U);
+        hess_eval = hess(x, D, b, lambda, U);
         if abs(hess_eval) < 10^-6
             hess_eval = sign(hess_eval)*10^-5;
         end
         x = x - grad_eval/hess_eval;
-        
-        % update containers
-        in = [in x];
-        out = [out obj(x)];
         
         % update stopers
         iter = iter + 1;
     end  
 end
 
-% evaluate the objective
-function z = obj(y)
-    z = 'TODO';
-end 
-
 % evaluate the gradient
-function z = grad(y)
+function z = grad(x, D, b, lambda, U)
     z =  -2 * D * diag(b) * max(ones(length(D),1) - diag(b) * D' * x,0) + 2 * lambda * U * x;
 end 
 
 % evaluate the hessian
-function z = hess(y)
-    z = 'TODO';
+function H = hess(x, D, b, lambda, U)
+    %find set of indices, S, where 1-bndn'x >= 0
+    S = zeros(size(b));
+    for ii = 1:size(b,1)
+       if (1 - b(ii)*D(:,ii)'*x) >= 0
+          S(ii) = 1; 
+       end
+    end
+    
+    %initialize DsubS
+    Ds = zeros(size(D,1),sum(S));
+    
+    stackInd = 1;
+    for incInd = 1:size(S)
+        if S(incInd) == 1
+            Ds(stackInd) = D(:,incInd);
+            stackInd = stackInd + 1;
+        end
+    end
+    
+    H = 2 * (Ds * Ds') + 2* lambda* U;
 end 
        
 
-function x = grad_descent_soft_SVM()
+function x = grad_descent_soft_SVM(x0, D, b, lambda, alpha)
     % Initializations 
     x = x0;
     iter = 1;
