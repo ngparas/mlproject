@@ -9,13 +9,14 @@ function [ faceCoord ] = window_slide(imgMat, model)
 faceCoord = zeros(size(imgMat));
 
 %Set default patch size
-defPatchSize = 28;
-
+hdefPatchSize = 168;
+vdefPatchSize = 192;
 %Set patch sizes to search with:
-patchSizeRatios = [0.5:0.5:15];
+patchSizeRatios = [0.1:0.25:15];
+%patchSizeRatios = 1;
 
 %Search step size ratio
-stepSizeRatio = 0.1;
+%stepSizeRatio = 0.01;
 
 %Find size of image
 imgSize = size(imgMat);
@@ -23,24 +24,28 @@ imgSize = size(imgMat);
 %loop for multiple patch sizes
 for ratioInd = 1:length(patchSizeRatios)
    %size size of current patch
-   patchSize = defPatchSize * patchSizeRatios(ratioInd);
-   stepSize = round(stepSizeRatio * patchSize);
+   %patchSize = defPatchSize * patchSizeRatios(ratioInd);
+   hPatchSize = round(hdefPatchSize * patchSizeRatios(ratioInd));
+   vPatchSize = round(vdefPatchSize * patchSizeRatios(ratioInd));
    
+   
+   %stepSize = round(stepSizeRatio * patchSize);
+   stepSize = 1;
    %Initialize search indices
    vLoc = 1;
    hLoc = 1;   
    
    %slide patch down the image
-   while (vLoc + patchSize - 1) <= (imgSize(1))
+   while (vLoc + vPatchSize - 1) <= (imgSize(1))
        %slide patch across the image
-       while (hLoc + patchSize - 1) <= (imgSize(2))
+       while (hLoc + hPatchSize - 1) <= (imgSize(2))
            %get normalized vector of patch
-           patch = vec_norm(imresize(imgMat(vLoc:(vLoc + patchSize - 1),hLoc:(hLoc + patchSize -1)),1/patchSizeRatios(ratioInd)));
+           patch = vec_norm(imresize(imgMat(vLoc:(vLoc + vPatchSize - 1),hLoc:(hLoc + hPatchSize -1)),[28 28]));
            %determine if the patch has a face or not
            isFace = classifySVM([1; patch], model);
            %if theres a face, update faceCoord
            if isFace == 1
-               faceCoord(vLoc:(vLoc + patchSize - 1),hLoc:(hLoc + patchSize -1)) = 1;
+               faceCoord(vLoc:(vLoc + vPatchSize - 1),hLoc:(hLoc + hPatchSize -1)) = 1;
            end
            %increment horizontal location
            hLoc = hLoc + stepSize;
