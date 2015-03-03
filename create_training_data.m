@@ -19,7 +19,7 @@ data = zeros(imgDim^2+1,dataNum+imgNum*sampNum);
 for x=(1:dataNum)
     
     %Importing the picture
-    img = imread([path 'pic' num2str(x) '.jpg']);
+    img = imread([path 'pic' num2str(x) '.pgm']);
     
     %Resize the image to 28 x 28 x 3
     img = imresize(img, [imgDim, imgDim]);

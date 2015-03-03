@@ -15,28 +15,31 @@ function [x] = hessian_descent(x0, D, b, lambda)
     grad_eval = 1;
     x = x0;
     
+    oneMat = ones(size(D,2),1);
+    
     %Define U
+    k = size(D,1);
     U = zeros(k);
     U(2:k,2:k) = eye(k-1);
   
     % main loop
     while norm(grad_eval) > grad_stop && iter <= max_its
         % take step
-        grad_eval = grad(x, D, b, lambda, U);
+        grad_eval = grad(x, D, b, lambda, U, oneMat);
         hess_eval = hess(x, D, b, lambda, U);
-        if abs(hess_eval) < 10^-6
-            hess_eval = sign(hess_eval)*10^-5;
-        end
-        x = x - grad_eval/hess_eval;
-        
+        %if abs(hess_eval) < 10^-6
+        %    hess_eval = sign(hess_eval)*10^-5;
+        %end
+        %x = x - grad_eval/hess_eval;
+        x = x - pinv(hess_eval)*grad_eval;
         % update stopers
         iter = iter + 1;
     end  
 end
 
 % evaluate the gradient
-function z = grad(x, D, b, lambda, U)
-    z =  -2 * D * diag(b) * max(ones(length(D),1) - diag(b) * D' * x,0) + 2 * lambda * U * x;
+function z = grad(x, D, b, lambda, U, oneMat)
+    z =  -2 * D * diag(b) * max(oneMat - diag(b) * D' * x,0) + 2 * lambda * U * x;
 end 
 
 % evaluate the hessian
@@ -55,14 +58,13 @@ function H = hess(x, D, b, lambda, U)
     stackInd = 1;
     for incInd = 1:size(S)
         if S(incInd) == 1
-            Ds(stackInd) = D(:,incInd);
+            Ds(:,stackInd) = D(:,incInd);
             stackInd = stackInd + 1;
         end
     end
     
     H = 2 * (Ds * Ds') + 2* lambda* U;
 end 
-       
 
 function x = grad_descent_soft_SVM(x0, D, b, lambda, alpha)
     % Initializations 
