@@ -19,23 +19,23 @@ data = zeros(imgDim^2+1,dataNum+imgNum*sampNum);
 for x=(1:dataNum)
     
     %Importing the picture
-    img = imread([path 'pic' num2str(x) '.jpg']);
-    
+    img = imread([path 'pic' num2str(x) '.pgm']);
+    %img = rgb2gray(img);
     %Resize the image to 28 x 28 x 3
     img = imresize(img, [imgDim, imgDim]);
     
     %Selecting just one channel from the image (red):
-    img_red = img(:,:,1);
+    %img_red = img(:,:,1);
     %img_blue = img(:,:,2);
     %img_green = img(:,:,3);
     
     %Vectorizing and normalizing the imgture
-    img_red = vec_norm(img_red);
+    img = vec_norm(img);
     %img_blue = vec_norm(img_blue);
     %img_green = vec_norm(img_green);
     
     %Adding '1' as the classifier label
-    img = [img_red; 1];
+    img = [img; 1];
     %img = [img_red; img_blue; img_green; 1]';
     
     %Adding to data
@@ -58,5 +58,12 @@ for x=(1:imgNum)
     data(:,colIndex:colIndex+sampNum-1) = df;
     
 end
+
+%add bias term
+data2 = zeros(size(data,1)+1,size(data,2));
+data2(1,:) = 1;
+data2(2:end,:) = data;
+
+data = data2;
 
 end
