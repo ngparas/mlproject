@@ -1,5 +1,4 @@
-function data = create_training_data(path,dataNum,sampNum)
-%path is the path to the images
+function data = create_training_data(dataNum,sampNum)
 %dataNum is the number of face images
 %sampNum is the number of samples to take from each of the 10 nonface
 %images
@@ -13,13 +12,16 @@ imgNum = 10;
 %creating dataset
 data = zeros(imgDim^2+1,dataNum+imgNum*sampNum);
 
+%setting path
+path = [pwd  '/images/'];
+
 %%%%PART 1: IMPORTING FACE IMAGES
 
 %use dataNum in loop to select all images
 for x=(1:dataNum)
     
     %Importing the picture
-    img = imread([path 'pic' num2str(x) '.pgm']);
+    img = imread([path 'pic' num2str(x) '.ppm']);
     %img = rgb2gray(img);
     %Resize the image to 28 x 28 x 3
     img = imresize(img, [imgDim, imgDim]);
