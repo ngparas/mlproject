@@ -1,6 +1,6 @@
-function lambda = cross_validate_classification(k,D,b,lambda_range)
+function lam = cross_validate_classification(k,D,b,lambda_range)
 
-   n = size(D,1);
+   n = size(D,2);
    indices = generate_indices(n, k);
    lam = cross_validate(D,b,indices,lambda_range);
    
@@ -33,13 +33,13 @@ function lam = cross_validate(A,b,c, lams)
         train_resids = [];
 
         for j = 1:k
-            A_1 = A(find(c ~= j),:);
+            A_1 = A(:,find(c ~= j));
             b_1 = b(find(c ~= j));
-            A_2 = A(find(c==j),:);
+            A_2 = A(:,find(c==j));
             b_2 = b(find(c==j));
             
             % run soft-margin SVM with chosen lambda
-            x = soft_svm(A_1',b_1,lam);
+            x = soft_SVM(A_1,b_1,lam);
             
            resid = evaluate(A_2,b_2,x);
            test_resids = [test_resids resid];
@@ -59,7 +59,7 @@ function lam = cross_validate(A,b,c, lams)
         
         % run soft-margin SVM with chosen lambda
         lam = lams(j);
-        x = soft_svm(A_1',b_1,lam);
+        x = soft_SVM(A_1',b_1,lam);
   
         
         %%% find the worst performer (per split) and plot it %%%
@@ -69,7 +69,7 @@ function lam = cross_validate(A,b,c, lams)
 
         % run soft-margin SVM with chosen lambda
         lam = lams(j);
-        x = soft_svm(A_1',b_1,lam);
+        x = soft_SVM(A_1',b_1,lam);
     end
     test_ave = mean(test_errors');
     [val,j] = min(test_ave);
@@ -81,12 +81,12 @@ function score = evaluate(A,b,x)
 % compute score of trained model on test data
 
     score = 0;  % initialize
-    s = A*x;
+    s = A' * x;
     ind = find(s > 0);
     s(ind) = 1;
     ind = find(s <= 0);
     s(ind) = -1;
-    t = s .* b;
+    t = s' .* b;
     ind = find(t < 0);
     t(ind) = 0;
     score = 1 - sum(t) / numel(t);
