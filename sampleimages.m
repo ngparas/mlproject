@@ -16,8 +16,8 @@ function X = sampleimages(samples, winsize, path);
 % Gather rectangular image patches
 %----------------------------------------------------------------------
 
-% We have a total of 10 images.
-dataNum = 10;
+% We have a total of 7 images.
+dataNum = 7;
 
 % This is how many patches to take per image
 getsample = floor(samples/dataNum);

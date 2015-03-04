@@ -1,19 +1,15 @@
 function data = create_training_data(dataNum,sampNum)
 %dataNum is the number of face images
-%sampNum is the number of samples to take from each of the 10 nonface
-%images
+%sampNum is the total number of samples to take
 
 %Width of image (assuming square)
 imgDim = 28;
 
-%Number of images to sample from
-imgNum = 10;
-
 %creating dataset
-data = zeros(imgDim^2+1,dataNum+imgNum*sampNum);
+data = zeros(imgDim^2+1,dataNum+sampNum);
 
 %setting path
-path = [pwd  '/images/'];
+fPath = [pwd  '\images\'];
 
 %%%%PART 1: IMPORTING FACE IMAGES
 
@@ -21,15 +17,13 @@ path = [pwd  '/images/'];
 for x=(1:dataNum)
     
     %Importing the picture
-    img = imread([path 'pic' num2str(x) '.ppm']);
+    img = imread([fPath 'pic' num2str(x) '.ppm']);
     %img = rgb2gray(img);
     %Resize the image to 28 x 28 x 3
     img = imresize(img, [imgDim, imgDim]);
     
-    %Selecting just one channel from the image (red):
-    %img_red = img(:,:,1);
-    %img_blue = img(:,:,2);
-    %img_green = img(:,:,3);
+    %Converting to greyscale
+    img = rgb2gray(img);
     
     %Vectorizing and normalizing the imgture
     img = vec_norm(img);
@@ -47,25 +41,21 @@ end
 
 %%%%PART 2: GENERATING NON-FACE IMAGES
 
-for x=(1:imgNum)
+%for x=(1:imgNum)
     
     %Generating image samples
-    df = sampleimages(sampNum, 28, path);
+    df = sampleimages(sampNum, 28, fPath);
     
     %Adding '-1' as the classifier label
     df = [df; -ones(1,sampNum)];
     
     %Adding to data
-    colIndex = 1+dataNum+(x-1)*sampNum;
+    colIndex = 1+dataNum;
     data(:,colIndex:colIndex+sampNum-1) = df;
     
-end
+%end
 
 %add bias term
-data2 = zeros(size(data,1)+1,size(data,2));
-data2(1,:) = 1;
-data2(2:end,:) = data;
-
-data = data2;
+data = [ones(1,size(data,2)); data];
 
 end
