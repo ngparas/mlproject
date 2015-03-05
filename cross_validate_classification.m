@@ -15,7 +15,7 @@ function lam = cross_validate_classification(k,D,b,lambda_range)
             start = current_i;
             stop = current_i + fold_sizes(f) - 1;
             fold_indices(start:stop) = f;
-            current_i = current_i + stop;
+            current_i = stop + 1;
         end
     end
 
