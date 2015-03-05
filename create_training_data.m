@@ -3,7 +3,7 @@ function data = create_training_data(dataNum,hogParam)
 %hogParam is the number of hog pixels to block
 
 %preserve 5:1 ratio of nonFace to Face
-sampNum = 5*dataNum;
+sampNum = 3*dataNum;
 
 %HoG Parameters
 hogDim = 31;

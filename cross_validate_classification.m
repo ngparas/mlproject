@@ -52,25 +52,25 @@ function lam = cross_validate(A,b,c, lams)
     end
 
     % find best parameter per data-split
-    for i = 1:k
-        [val,j] = min(test_errors(:,i));
-        A_1 = A(find(c ~= i),:);
-        b_1 = b(find(c ~= i));
+    %for i = 1:k
+        %[val,j] = min(test_errors(:,i));
+        %A_1 = A(find(c ~= i),:);
+        %b_1 = b(find(c ~= i));
         
         % run soft-margin SVM with chosen lambda
-        lam = lams(j);
-        x = soft_SVM(A_1',b_1,lam);
+        %lam = lams(j);
+        %x = soft_SVM(A_1,b_1,lam);
   
         
         %%% find the worst performer (per split) and plot it %%%
-        [val,j] = max(test_errors(:,i));
-        A_1 = A(find(c ~= i),:);
-        b_1 = b(find(c ~= i)); 
+        %[val,j] = max(test_errors(:,i));
+        %A_1 = A(find(c ~= i),:);
+        %b_1 = b(find(c ~= i)); 
 
         % run soft-margin SVM with chosen lambda
-        lam = lams(j);
-        x = soft_SVM(A_1',b_1,lam);
-    end
+        %lam = lams(j);
+        %x = soft_SVM(A_1',b_1,lam);
+    %end
     test_ave = mean(test_errors');
     [val,j] = min(test_ave);
     
