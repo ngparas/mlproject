@@ -9,7 +9,7 @@ imgDim = 28;
 data = zeros(imgDim^2+1,dataNum+sampNum);
 
 %setting path
-fPath = [pwd  '\images\'];
+fPath = [pwd  '/images/'];
 
 %%%%PART 1: IMPORTING FACE IMAGES
 
