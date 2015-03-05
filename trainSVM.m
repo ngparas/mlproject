@@ -1,4 +1,4 @@
-function [ coeff, lam ] = trainSVM(dataPath, dataNum, sampNum, k, lamRange)
+function [ coeff, lam ] = trainSVM()
 %trainSVM returns the trained coefficients and optimal lambda for an SVM
 %   dataPath is the path to the folder of photos
 %   dataNum is the number of Positive case photos to use
@@ -9,16 +9,22 @@ function [ coeff, lam ] = trainSVM(dataPath, dataNum, sampNum, k, lamRange)
 %   refitting to all of the training data
 %   lam returns the optimal lambda found through k fold CV
 
+% Number of folds for CV
+k = 5;
+
+dataNum = 100;
+sampNum = 10;
+lambdaRange = 0:0.1:1;
 
 %Import Data
-data = create_training_data(dataPath,dataNum,sampNum);
+data = create_training_data(dataNum,sampNum);
 
 %Separate features from labels
 D = data(1:(size(data,1)-1),:);
 b = data(size(data,1),:);
 
-
-
+lam = cross_validate_classification(k,D,b,lambdaRange);
+coeff = soft_SVM(D, b, lam);
 
 end
 
