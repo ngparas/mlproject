@@ -1,4 +1,4 @@
-function [ faceCoord ] = window_slide(imgMat, model)
+function [ faceCoord ] = window_slide(imgMat, model, hogParam)
 %window_slide uses a sliding window method to search for faces in an image
 %   imgMat is a matrix representation of an image
 %   model is a vector of learned coefficients for a classifier
@@ -42,7 +42,7 @@ for ratioInd = 1:length(patchSizeRatios)
        %slide patch across the image
        while ((hLoc + patchSize - 1) <= (imgSize(2)))
            %get normalized vector of patch
-           patch = vec_norm(imresize(imgMat(vLoc:(vLoc + patchSize - 1),hLoc:(hLoc + patchSize -1)),[28 28]));
+           patch = vec_norm(imresize(imgMat(vLoc:(vLoc + patchSize - 1),hLoc:(hLoc + patchSize -1)),[28 28]),hogParam);
            %determine if the patch has a face or not
            isFace = classifySVM([1; patch], model);
            %if theres a face, update faceCoord

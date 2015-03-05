@@ -32,7 +32,7 @@ function [x] = hessian_descent(x0, D, b, lambda)
         %x = x - grad_eval/hess_eval;
         
         x = x - pinv(hess_eval)*grad_eval;
-        
+        print(iter);
         % update stopers
         iter = iter + 1;
     end  

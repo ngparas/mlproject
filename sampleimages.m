@@ -1,4 +1,4 @@
-function X = sampleimages(samples, winsize, path);
+function X = sampleimages(samples, winsize, hogParam, path)
 
 % gathers patches from the grey-scale images, no preprocessing done yet
 %
@@ -16,6 +16,8 @@ function X = sampleimages(samples, winsize, path);
 % Gather rectangular image patches
 %----------------------------------------------------------------------
 
+% HoG Dimensions
+hogDim = 31;
 % We have a total of 7 images.
 dataNum = 7;
 
@@ -23,8 +25,8 @@ dataNum = 7;
 getsample = floor(samples/dataNum);
 
 % Initialize the matrix to hold the patches
-X = zeros(winsize^2,samples);
-
+%X = zeros(winsize^2,samples);
+X = zeros(hogDim * (winsize / hogParam)^2,samples);
 sampleNum = 1;  
 for i=(1:dataNum)
 
@@ -50,14 +52,14 @@ for i=(1:dataNum)
   posx = floor(rand(1,getsample)*(sizex-winsize-2))+1;
   posy = floor(rand(1,getsample)*(sizey-winsize-1))+1;
   for j=1:getsample
-    X(:,sampleNum) = reshape( I(posy(1,j):posy(1,j)+winsize-1, ...
-			posx(1,j):posx(1,j)+winsize-1),[winsize^2 1]);
+    %X(:,sampleNum) = reshape( I(posy(1,j):posy(1,j)+winsize-1,posx(1,j):posx(1,j)+winsize-1),[winsize^2 1]);
+    X(:,sampleNum) = vec_norm( I(posy(1,j):posy(1,j)+winsize-1,posx(1,j):posx(1,j)+winsize-1),hogParam);
     sampleNum=sampleNum+1;
   end 
   
-  for xCol = 1:size(X,2)
-     X(:,xCol) = X(:,xCol) /  norm(X(:,xCol)); 
-  end
+  %for xCol = 1:size(X,2)
+  %   X(:,xCol) = X(:,xCol) /  norm(X(:,xCol)); 
+  %end
   
 end
 

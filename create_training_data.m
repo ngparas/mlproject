@@ -1,12 +1,18 @@
-function data = create_training_data(dataNum,sampNum)
+function data = create_training_data(dataNum,hogParam)
 %dataNum is the number of face images
-%sampNum is the total number of samples to take
+%hogParam is the number of hog pixels to block
+
+%preserve 5:1 ratio of nonFace to Face
+sampNum = 5*dataNum;
+
+%HoG Parameters
+hogDim = 31;
 
 %Width of image (assuming square)
 imgDim = 28;
 
 %creating dataset
-data = zeros(imgDim^2+1,dataNum+sampNum);
+data = zeros(hogDim*(imgDim/hogParam)^2+1,dataNum+sampNum);
 
 %setting path
 fPath = [pwd  '/images/'];
@@ -26,7 +32,7 @@ for x=(1:dataNum)
     img = rgb2gray(img);
     
     %Vectorizing and normalizing the imgture
-    img = vec_norm(img);
+    img = vec_norm(img,hogParam);
     %img_blue = vec_norm(img_blue);
     %img_green = vec_norm(img_green);
     
@@ -44,7 +50,7 @@ end
 %for x=(1:imgNum)
     
     %Generating image samples
-    df = sampleimages(sampNum, 28, fPath);
+    df = sampleimages(sampNum, 28, hogParam, fPath);
     
     %Adding '-1' as the classifier label
     df = [df; -ones(1,sampNum)];
