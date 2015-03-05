@@ -9,8 +9,8 @@ x = hessian_descent(x0, D, b, lambda);
 function [x] = hessian_descent(x0, D, b, lambda)
 
     % initializations
-    grad_stop = 10^-5;
-    max_its = 40;
+    grad_stop = 10^-3;
+    max_its = 30;
     iter = 1;
     grad_eval = 1;
     x = x0;
