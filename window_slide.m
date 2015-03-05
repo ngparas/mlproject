@@ -9,8 +9,9 @@ function [ faceCoord ] = window_slide(imgMat, model)
 faceCoord = zeros(size(imgMat));
 
 %Set default patch size
-hdefPatchSize = 168;
-vdefPatchSize = 192;
+defPatchSize = 28;
+%hdefPatchSize = 168;
+%vdefPatchSize = 192;
 %Set patch sizes to search with:
 patchSizeRatios = [0.1:0.25:15];
 %patchSizeRatios = 1;
@@ -24,9 +25,9 @@ imgSize = size(imgMat);
 %loop for multiple patch sizes
 for ratioInd = 1:length(patchSizeRatios)
    %size size of current patch
-   %patchSize = defPatchSize * patchSizeRatios(ratioInd);
-   hPatchSize = round(hdefPatchSize * patchSizeRatios(ratioInd));
-   vPatchSize = round(vdefPatchSize * patchSizeRatios(ratioInd));
+   patchSize = round(defPatchSize * patchSizeRatios(ratioInd));
+   %hPatchSize = round(hdefPatchSize * patchSizeRatios(ratioInd));
+   %vPatchSize = round(vdefPatchSize * patchSizeRatios(ratioInd));
    
    
    %stepSize = round(stepSizeRatio * patchSize);
@@ -36,16 +37,16 @@ for ratioInd = 1:length(patchSizeRatios)
    hLoc = 1;   
    
    %slide patch down the image
-   while (vLoc + vPatchSize - 1) <= (imgSize(1))
+   while (vLoc + patchSize - 1) <= (imgSize(1))
        %slide patch across the image
-       while (hLoc + hPatchSize - 1) <= (imgSize(2))
+       while (hLoc + patchSize - 1) <= (imgSize(2))
            %get normalized vector of patch
-           patch = vec_norm(imresize(imgMat(vLoc:(vLoc + vPatchSize - 1),hLoc:(hLoc + hPatchSize -1)),[28 28]));
+           patch = vec_norm(imresize(imgMat(vLoc:(vLoc + patchSize - 1),hLoc:(hLoc + patchSize -1)),[28 28]));
            %determine if the patch has a face or not
            isFace = classifySVM([1; patch], model);
            %if theres a face, update faceCoord
            if isFace == 1
-               faceCoord(vLoc:(vLoc + vPatchSize - 1),hLoc:(hLoc + hPatchSize -1)) = 1;
+               faceCoord(vLoc:(vLoc + patchSize - 1),hLoc:(hLoc + patchSize -1)) = 1;
            end
            %increment horizontal location
            hLoc = hLoc + stepSize;
