@@ -1,6 +1,6 @@
 function x = soft_SVM(D, b, lambda)
 %set initial point
-x0 = zeros(size(D,1),1);
+x0 = ones(size(D,1),1);
 
 x = hessian_descent(x0, D, b, lambda);
 %x = grad_descent_soft_SVM();
@@ -9,8 +9,8 @@ x = hessian_descent(x0, D, b, lambda);
 function [x] = hessian_descent(x0, D, b, lambda)
 
     % initializations
-    grad_stop = 10^-5;
-    max_its = 40;
+    grad_stop = 10^-4;
+    max_its = 100;
     iter = 1;
     grad_eval = 1;
     x = x0;
@@ -32,7 +32,7 @@ function [x] = hessian_descent(x0, D, b, lambda)
         %x = x - grad_eval/hess_eval;
         
         x = x - pinv(hess_eval)*grad_eval;
-        
+        iter
         % update stopers
         iter = iter + 1;
     end  
@@ -40,7 +40,7 @@ end
 
 % evaluate the gradient
 function z = grad(x, D, b, lambda, U, oneMat)
-    z =  -2 * D * diag(b) * max(oneMat - diag(b) * D' * x,0) + 2 * lambda * U * x;
+    z =  -2 * D * diag(b) * max(oneMat - (diag(b) * D' * x),0) + 2 * lambda * U * x;
 end 
 
 % evaluate the hessian
