@@ -23,6 +23,10 @@ We tried numerous data sets, and decided to settle on the X image dataset. It co
 
 ### Soft SVM and Cross Validation
 
+The underlying classification model that we use to detect faces is a Soft Margin Support Vector Machine. The model classifies input observations to a binary fashion, as opposed to the probabilistic output of Logistic Regression, another model we considered. Our implementation of the Soft Margin SVM uses a hessian descent as the iterative optimization to find the optimal weights that minimize the cost function.
+
+Since Soft Margin SVM allow observations to be mislabeled, the cost function also includes a penalty parameter, lambda, to control the tradeoff between a small margin and mislabeled observations. To choose lambda, we perform a K-Fold cross validation with multiple lambda values ranging from X to Y, and choose the one that chooses the weights that minimize the testing error.
+
 ### Finding faces in new images
 
 
