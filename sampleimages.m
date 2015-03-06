@@ -18,7 +18,7 @@ function X = sampleimages(samples, winsize, hogParam, path)
 
 % HoG Dimensions
 hogDim = 31;
-% We have a total of 7 images.
+% We have a total of 16 images.
 dataNum = 16;
 
 % This is how many patches to take per image
@@ -27,7 +27,11 @@ getsample = floor(samples/dataNum);
 % Initialize the matrix to hold the patches
 %X = zeros(winsize^2,samples);
 X = zeros(hogDim * (winsize / hogParam)^2,samples);
-sampleNum = 1;  
+sampleNum = 1;
+
+% Setting seed for replicable results
+s = rng(23,'twister');
+
 for i=(1:dataNum)
 
   % Even things out (take enough from last image)
@@ -49,6 +53,7 @@ for i=(1:dataNum)
   % Sample patches in random locations
   sizex = size(I,2); 
   sizey = size(I,1);
+  
   posx = floor(rand(1,getsample)*(sizex-winsize-2))+1;
   posy = floor(rand(1,getsample)*(sizey-winsize-1))+1;
   for j=1:getsample
