@@ -19,6 +19,7 @@ end
 
 %remove interior 1s
 faceBoxes = faceCoord - intOnes;
+%faceBoxes = faceCoord;
 
 figure
 imshow(imgMat);

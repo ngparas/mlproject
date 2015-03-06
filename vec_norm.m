@@ -11,7 +11,7 @@ imgNorm = vl_hog(single(img),hogParam,'verbose');
 imgNorm = imgNorm(:);
 
 %Normalizing the image 
-imgNorm = imgNorm/(norm(imgNorm) + eps);
+%imgNorm = imgNorm/(norm(imgNorm) + eps);
 %norm(imgNorm)
 
 end

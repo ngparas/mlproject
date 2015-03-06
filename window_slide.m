@@ -10,11 +10,19 @@ faceCoord = zeros(size(imgMat));
 
 %Set default patch size
 %defPatchSize = 28;
-hdefPatchSize = 25;
-vdefPatchSize = 36;
+
+%hdefPatchSize = 25;
+%vdefPatchSize = 36;
+
+
+hdefPatchSize = 17;
+vdefPatchSize = 22;
+
+
 %Set patch sizes to search with:
-patchSizeRatios = [0.5:0.5:3.5];
-%patchSizeRatios = 1;
+%patchSizeRatios = [1:0.25:6];
+
+patchSizeRatios = [1:1:6];
 
 %Search step size ratio
 %stepSizeRatio = 0.01;
@@ -48,7 +56,11 @@ for ratioInd = 1:length(patchSizeRatios)
            %if theres a face, update faceCoord
            if isFace == 1
                faceCoord(vLoc:(vLoc + vPatchSize - 1),hLoc:(hLoc + hPatchSize -1)) = 1;
-              
+               %faceCoord(vLoc:(vLoc + vPatchSize - 1),hLoc) = 1;
+               %faceCoord(vLoc:(vLoc + vPatchSize - 1),hLoc + hPatchSize - 1) = 1;
+               
+               %faceCoord(vLoc,hLoc:(hLoc + hPatchSize - 1)) = 1;
+               %faceCoord(vLoc+vPatchSize - 1,hLoc:(hLoc + hPatchSize - 1)) = 1;
            end
            %increment horizontal location
            hLoc = hLoc + stepSize;

@@ -1,9 +1,9 @@
-function data = create_training_data(dataNum,hogParam)
+function [data, D, b] = create_training_data(dataNum,hogParam)
 %dataNum is the number of face images
 %hogParam is the number of hog pixels to block
 
 %preserve 5:1 ratio of nonFace to Face
-sampNum = 3*dataNum;
+sampNum = 5*dataNum;
 
 %HoG Parameters
 hogDim = 31;
@@ -63,5 +63,7 @@ end
 
 %add bias term
 data = [ones(1,size(data,2)); data];
+D = data(1:(end-1),:);
+b = data(end,:);
 
 end

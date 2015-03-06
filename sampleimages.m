@@ -19,7 +19,7 @@ function X = sampleimages(samples, winsize, hogParam, path)
 % HoG Dimensions
 hogDim = 31;
 % We have a total of 7 images.
-dataNum = 14;
+dataNum = 16;
 
 % This is how many patches to take per image
 getsample = floor(samples/dataNum);
