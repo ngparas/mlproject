@@ -17,7 +17,6 @@ data = create_training_data(dataNum,hogParam);
 D = data(1:(end-1),:);
 b = data(end,:);
 
-
 %ran soft_SVM with x0 = 1 to get closer starting value for CV
 %initCoeff = soft_SVM(D, b, lam);
 %saved initCoeff as xSVM.mat
@@ -26,11 +25,12 @@ b = data(end,:);
 
 %cross validate to tune lambda
 [lam, errors] = cross_validate_classification(k,D,b,lambdaRange);
-%optimal lambda is found to be 1
 
+%optimal lambda is found to be 1
 
 %refit entire model using optimal lambda
 finalCoeff = soft_SVM(D,b,lam);
 
 %misclassification score on Training Set
 score = evaluate(D', b', finalCoeff);
+

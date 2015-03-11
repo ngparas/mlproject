@@ -1,4 +1,3 @@
-
 # EECS 395 Final Project: Face Detection Learning
 
 ### Rohan Agarwal, Annabel Buckfire, Nick Paras, Leon Sasson
@@ -18,7 +17,6 @@ After the model is trained and the optimal coefficients are known, our system is
 ### Data Set
 As with most supervised learning models, the data used to learn a certain problem space is an important part of the process, and can have the most impact in the accuracy and effectiveness of the solution.
 
-**TODO**
 We tried numerous data sets, and decided to settle on the X image dataset. It contains Y number of faces, in mostly square images with relatively good resolution and little noise.
 
 ### Pre-Processing and Feature Extraction
@@ -42,6 +40,4 @@ While the data set of faces we used was large, it was largely composed of caucas
 As we wanted to increase the size of our non-face dataset, we saw computation times significantly increase.
 While computation time is generally a problem, in our case it was challenging because it didn’t allow us to perform a reasonable size K-fold cross-validation along with a large range of penalty (Lambda) values. 
 Due to the scope of your project, we only tested with using one predictive model, soft margin SVM. It would be critical to test and cross-validate against other predictive models such as Logistic Regression and Neural Nets to be able to determine which model performs better for this specific use case.
-
-
 
