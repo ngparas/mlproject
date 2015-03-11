@@ -4,7 +4,7 @@
 ### Rohan Agarwal, Annabel Buckfire, Nick Paras, Leon Sasson
 
 ## Introduction
-Most people would say that they can tell whether something is a face or not in just a quick glimpse, without thinking at all. And yet, being able to program computers to identify faces in images has proven to be a tremendously hard problem. That said, after many years and countless of researchers and papers, many solutions have been proposed and the face detection problem is now considered to be solved by most researchers. 
+Most people would say that they can tell whether something is a face or not with just a quick glimpse.  And yet, being able to program computers to identify faces in images has proven to be a tremendously hard problem. That said, after many years and countless of researchers and papers, many solutions have been proposed and the face detection problem is now considered to be solved by most researchers. 
 In this project, we aim at using methods learned in class to apply supervised machine learning models, as well as computer vision concepts and methods to develop a functional face detection model. 
 
 ## Methodology
