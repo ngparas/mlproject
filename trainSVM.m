@@ -3,6 +3,9 @@
 %   k is the number of folds to use in Cross Validation
 %   lamRange is the range of lambda values to use in CV
 
+%initialize VLFeat for HoG features
+loadVLFeat();
+
 % Number of folds for CV
 k = 3;
 
