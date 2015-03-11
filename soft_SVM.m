@@ -1,6 +1,12 @@
 function x = soft_SVM(D, b, lambda)
 %set initial point
-x0 = ones(size(D,1),1);
+xSVM = 0;
+if exist('xSVM.mat','file') == 2
+    load('xSVM.mat');
+    x0 = xSVM;
+else
+    x0 = ones(size(D,1),1);
+end
 
 x = hessian_descent(x0, D, b, lambda);
 %x = grad_descent_soft_SVM();
