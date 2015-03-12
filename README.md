@@ -1,12 +1,19 @@
 # EECS 395 Machine Learning : Face Detection
 Rohan Agarwal | Annabel Buckfire | Nick Paras | Leon Sasson
 
-We use the Caltech 10000 Faces Dataset to train Logistic Regression and SVM classifiers to perform face detection.
+In this project, we aim to use methods learned in class to apply supervised machine learning models, as well as computer vision concepts and methods, to develop a functional face detection model. More specifically, we train a Soft-Margin Support Vector Machine using HoG (Histogram of Oriented Gradients) features to classify images as faces or non-faces, and then employ a sliding-window methodology to detect and locate faces in a new image.
 
-Caltech 10000 Faces : http://www.vision.caltech.edu/Image_Datasets/Caltech_10K_WebFaces/
+See FinalWriteUp.md for the full report.
+
+The demo video may be found at http://youtu.be/9mA_VJ2cCtU
+Note: the demo video uses trainSVM.m and classDemo.svm independently for time purposes. To perform the demo on your own, we recommend cloning this repository and using FINALDEMOSCRIPT.m instead
+
+The final 'plug and play' demo deliverable is FINALDEMOSCRIPT.m
 
 
-Note: This project uses the VLFeat package:
+
+
+Finally, a note on licensing: this project uses the VLFeat package:
 
 VLFeat is distributed under the BSD license:
 

@@ -16,7 +16,7 @@ faceCoord = zeros(size(imgMat));
 
 
 %hdefPatchSize = 17;
-%vdefPatchSize = 22;
+%vdefPatchSize = 21;
 
 hdefPatchSize = 17;
 vdefPatchSize = 21;
