@@ -3,7 +3,7 @@
 
 In this project, we aim to use methods learned in class to apply supervised machine learning models, as well as computer vision concepts and methods, to develop a functional face detection model. More specifically, we train a Soft-Margin Support Vector Machine using HoG (Histogram of Oriented Gradients) features to classify images as faces or non-faces, and then employ a sliding-window methodology to detect and locate faces in a new image.
 
-#### See MLWrite-Up.pdf for the full report.
+#### See MLWRITEUP.pdf for the full report.
 
 #### The demo video may be found at http://youtu.be/9mA_VJ2cCtU
 Note: the demo video uses trainSVM.m and classDemo.svm independently for time purposes. To perform the demo on your own, we recommend cloning this repository and using FINALDEMOSCRIPT.m instead
