@@ -9,7 +9,7 @@ In this project, we aim to use methods learned in class to apply supervised mach
 Note: the demo video uses trainSVM.m and classDemo.svm independently for time purposes. To perform the demo on your own, we recommend cloning this repository and using FINALDEMOSCRIPT.m instead
 
 #### The final 'plug and play' demo deliverable is FINALDEMOSCRIPT.m
-
+A note on running the demo. The data matrix is 498x60000, so the demo takes a lot of memory to train, sometimes reaching 27Gb while computing the subgradient (Hessian). If this will not run on your computer, you may load the final coefficients by using load('finalCoeff.mat'), then simply comment out the softSVM() function call in the demo script and execute the script. If you are fitting the model, please note that the demo will take some time to run.
 
 
 
